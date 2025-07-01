@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Service Requests</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #6861f0, #e3f2fd);
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #006064;
+      margin-bottom: 10px;
+    }
+
+    .description-box {
+      max-width: 700px;
+      margin: 0 auto 30px;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .description-box p {
+      margin: 0;
+      font-size: 16px;
+      color: #333;
+      text-align: center;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .card {
+      background-color: #fff;
+      padding: 20px;
+      width: 280px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card h3 {
+      color: #00796b;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      margin: 6px 0;
+      font-size: 15px;
+    }
+
+    .delete-btn {
+      background-color: #e53935;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .delete-btn:hover {
+      background-color: #c62828;
+    }
+
+    .lang-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    .lang-toggle button {
+      padding: 10px 16px;
+      background-color: #4a148c;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .lang-toggle button:hover {
+      background-color: #6a1b9a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌐 Language Toggle Button -->
+  <div class="lang-toggle">
+    <button onclick="toggleLanguage()">🌐 <span id="lang-btn-text">Toggle Language</span></button>
+  </div>
+
+  <!-- 📝 Page Heading -->
+  <h2 data-en="Service Requests" data-te="సేవ అభ్యర్థనలు">Service Requests</h2>
+
+  <!-- ℹ️ Description Container -->
+  <div class="description-box">
+    <p
+      data-en="Here you can see all the service requests posted by users. Feel free to connect and help based on your skills." 
+      data-te="ఇక్కడ వినియోగదారులు పోస్ట్ చేసిన అన్ని సేవల అభ్యర్థనలను చూడవచ్చు. మీ నైపుణ్యాల ఆధారంగా సహాయపడటానికి స్వేచ్ఛగా కనెక్ట్ అవ్వండి.">
+      Here you can see all the service requests posted by users. Feel free to connect and help based on your skills.
+    </p>
+  </div>
+
+  <!-- 📋 Service Request Cards -->
+  <div class="card-container" id="serviceList"></div>
+
+  <!-- ✅ JavaScript -->
+  <script>
+    function saveServices(services) {
+      localStorage.setItem("services", JSON.stringify(services));
+    }
+
+    function renderServices() {
+      const list = document.getElementById("serviceList");
+      list.innerHTML = "";
+
+      const services = JSON.parse(localStorage.getItem("services") || "[]");
+
+      services.forEach((s, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+          <p data-en="<b>Name:</b> ${s.name}" data-te="<b>పేరు:</b> ${s.name}"><b>Name:</b> ${s.name}</p>
+          <p data-en="<b>Service:</b> ${s.service}" data-te="<b>సేవ:</b> ${s.service}"><b>Service:</b> ${s.service}</p>
+          <p data-en="<b>Location:</b> ${s.location}" data-te="<b>ప్రాంతం:</b> ${s.location}"><b>Location:</b> ${s.location}</p>
+          <p data-en="<b>Contact:</b> ${s.contact}" data-te="<b>ఫోన్:</b> ${s.contact}"><b>Contact:</b> ${s.contact}</p>
+          <p data-en="<b>Time Needed:</b> ${s.time}" data-te="<b>అవసరమైన సమయం:</b> ${s.time}"><b>Time Needed:</b> ${s.time}</p>
+          <button class="delete-btn" data-en="Delete" data-te="తొలగించు" onclick="deleteService(${index})">Delete</button>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function deleteService(index) {
+      let services = JSON.parse(localStorage.getItem("services") || "[]");
+      services.splice(index, 1);
+      saveServices(services);
+      renderServices();
+    }
+
+    function toggleLanguage() {
+      const elements = document.querySelectorAll('[data-en], [data-te]');
+      const langBtnText = document.getElementById("lang-btn-text");
+
+      const currentLang = langBtnText.textContent.includes("Toggle Language") ? "en" : "te";
+      const newLang = currentLang === "en" ? "te" : "en";
+
+      elements.forEach(el => {
+        el.innerHTML = el.getAttribute(`data-${newLang}`);
+      });
+
+      langBtnText.textContent = newLang === "en" ? "Toggle Language" : "భాష మార్చు";
+    }
+
+    renderServices();
+  </script>
+</body>
+</html>

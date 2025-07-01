@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register Skill</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #df8ae8, #8968ec);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      text-align: center;
+      color: #006064;
+      margin: 20px 0;
+    }
+
+    .info-text {
+      max-width: 900px;
+      margin: 20px;
+      background-color: #ffffffcc;
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 1.1em;
+      color: #444;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 950px;
+    }
+
+    .form-container form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #00acc1;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #007c91;
+    }
+
+    .lang-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    .lang-toggle button {
+      padding: 10px 18px;
+      background-color: #4a148c;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .lang-toggle button:hover {
+      background-color: #6a1b9a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌐 Language Toggle Button -->
+  <div class="lang-toggle">
+    <button onclick="toggleLanguage()">🌐 <span id="lang-btn-text">Toggle Language</span></button>
+  </div>
+
+  <!-- 🔤 Heading -->
+  <h2 data-en="Register Your Skill" data-te="మీ నైపుణ్యాన్ని నమోదు చేయండి">Register Your Skill</h2>
+
+  <!-- 📣 Info Description -->
+  <div class="info-text"
+       data-en="Showcase your talent to the world! Register your skill and be found by people nearby. Whether you're a student, freelancer, or hobbyist—let your skills shine!"
+       data-te="మీ ప్రతిభను ప్రపంచానికి చూపించండి! మీ నైపుణ్యాన్ని నమోదు చేసి స్థానిక ప్రజలచే గుర్తింపు పొందండి. మీరు విద్యార్థి, ఫ్రీలాన్సర్, లేదా హాబీయిస్ట్ అయినా సరే – మీ నైపుణ్యాన్ని మెరిపించండి!">
+    Showcase your talent to the world! Register your skill and be found by people nearby. Whether you're a student, freelancer, or hobbyist—let your skills shine!
+  </div>
+
+  <!-- 📝 Form Section -->
+  <div class="form-container">
+    <form id="registerForm">
+      <input type="text" name="name" placeholder="Name" required data-en-placeholder="Name" data-te-placeholder="పేరు">
+      <input type="text" name="skill" placeholder="Skill" required data-en-placeholder="Skill" data-te-placeholder="నైపుణ్యం">
+      <input type="text" name="location" placeholder="Location" required data-en-placeholder="Location" data-te-placeholder="ప్రాంతం">
+      <input type="text" name="time" placeholder="Available Time" required data-en-placeholder="Available Time" data-te-placeholder="లభ్యమైన సమయం">
+      <input type="text" name="whatsapp" placeholder="WhatsApp Number" required data-en-placeholder="WhatsApp Number" data-te-placeholder="వాట్సాప్ నంబర్">
+
+      <!-- Demo Video Link (Required) -->
+      <input type="url" name="demoLink" placeholder="Demo Video Link" required data-en-placeholder="Demo Video Link" data-te-placeholder="డెమో వీడియో లింక్">
+
+      <!-- Portfolio (Optional) -->
+      <input type="url" name="portfolio" placeholder="Portfolio Link (optional)" data-en-placeholder="Portfolio Link (optional)" data-te-placeholder="పోర్ట్‌ఫోలియో లింక్ (ఐచ్ఛికం)">
+
+      <button type="submit" data-en="Submit" data-te="సబ్మిట్ చేయండి">Submit</button>
+    </form>
+  </div>
+
+  <!-- 💻 Script -->
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const skillData = {
+        name: formData.get("name"),
+        skill: formData.get("skill"),
+        location: formData.get("location"),
+        time: formData.get("time"),
+        whatsapp: formData.get("whatsapp"),
+        demoLink: formData.get("demoLink"),
+        portfolio: formData.get("portfolio") || ""
+      };
+
+      let skills = JSON.parse(localStorage.getItem("skills") || "[]");
+      skills.push(skillData);
+      localStorage.setItem("skills", JSON.stringify(skills));
+
+      alert("Skill Registered Successfully!");
+      this.reset();
+    });
+
+    function toggleLanguage() {
+      const elements = document.querySelectorAll('[data-en], [data-te]');
+      const placeholders = document.querySelectorAll('[data-en-placeholder]');
+      const langBtnText = document.getElementById("lang-btn-text");
+
+      const currentLang = langBtnText.textContent.includes("Toggle Language") ? "en" : "te";
+      const newLang = currentLang === "en" ? "te" : "en";
+
+      elements.forEach(el => {
+        el.innerText = el.getAttribute(`data-${newLang}`);
+      });
+
+      placeholders.forEach(input => {
+        input.placeholder = input.getAttribute(`data-${newLang}-placeholder`);
+      });
+
+      langBtnText.textContent = newLang === "en" ? "Toggle Language" : "భాష మార్చు";
+    }
+  </script>
+
+</body>
+</html>

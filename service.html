@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Post a Service Request</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #c6ef49, #e0f7fa);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      margin-top: 40px;
+      color: #006064;
+      text-align: center;
+    }
+
+    .description-box {
+      max-width: 600px;
+      background-color: #ffffff;
+      padding: 20px;
+      margin: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .description-box p {
+      margin: 0;
+      font-size: 16px;
+      color: #333;
+      text-align: center;
+    }
+
+    .form-container {
+      max-width: 500px;
+      width: 90%;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    .form-container input,
+    .form-container button {
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .form-container button {
+      background-color: #00acc1;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .form-container button:hover {
+      background-color: #007c91;
+    }
+
+    .lang-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    .lang-toggle button {
+      padding: 10px 16px;
+      background-color: #4a148c;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .lang-toggle button:hover {
+      background-color: #6a1b9a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌐 Language Toggle Button -->
+  <div class="lang-toggle">
+    <button onclick="toggleLanguage()">🌐 <span id="lang-btn-text">Toggle Language</span></button>
+  </div>
+
+  <!-- 📝 Heading -->
+  <h2 data-en="Post a Service Request" data-te="సేవ అభ్యర్థనను పోస్ట్ చేయండి">Post a Service Request</h2>
+
+  <!-- ℹ️ Description Container -->
+  <div class="description-box">
+    <p
+      data-en="Need help from someone skilled in your area? Post a service request to connect with local talent quickly and easily." 
+      data-te="మీ పరిసరాలలో నైపుణ్యం ఉన్న వ్యక్తుల సహాయం అవసరమా? సేవ అభ్యర్థనను పోస్ట్ చేసి, త్వరగా మరియు సులభంగా వారికి కనెక్ట్ అవ్వండి.">
+      Need help from someone skilled in your area? Post a service request to connect with local talent quickly and easily.
+    </p>
+  </div>
+
+  <!-- 📋 Form -->
+  <div class="form-container">
+    <form id="serviceForm">
+      <input type="text" name="name"
+             data-en-placeholder="Name" 
+             data-te-placeholder="పేరు" 
+             placeholder="Name" required>
+
+      <input type="text" name="service"
+             data-en-placeholder="Service Needed" 
+             data-te-placeholder="అవసరమైన సేవ" 
+             placeholder="Service Needed" required>
+
+      <input type="text" name="location"
+             data-en-placeholder="Location" 
+             data-te-placeholder="ప్రాంతం" 
+             placeholder="Location" required>
+
+      <input type="text" name="contact"
+             data-en-placeholder="Contact Number" 
+             data-te-placeholder="ఫోన్ నంబర్" 
+             placeholder="Contact Number" required>
+
+      <input type="text" name="time"
+             data-en-placeholder="Time Needed"
+             data-te-placeholder="అవసరమైన సమయం"
+             placeholder="Time Needed" required>
+
+      <button type="submit" data-en="Submit" data-te="సబ్మిట్ చేయండి">Submit</button>
+    </form>
+  </div>
+
+  <!-- ✅ Scripts -->
+  <script>
+    // Save service request to localStorage
+    document.getElementById("serviceForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      let records = JSON.parse(localStorage.getItem("services") || "[]");
+      records.push(data);
+      localStorage.setItem("services", JSON.stringify(records));
+      alert("Service Request Posted Successfully!");
+      this.reset();
+    });
+
+    // Toggle language
+    function toggleLanguage() {
+      const elements = document.querySelectorAll('[data-en], [data-te]');
+      const placeholders = document.querySelectorAll('[data-en-placeholder], [data-te-placeholder]');
+      const langBtnText = document.getElementById("lang-btn-text");
+
+      const currentLang = langBtnText.textContent.includes("Toggle Language") ? "en" : "te";
+      const newLang = currentLang === "en" ? "te" : "en";
+
+      elements.forEach(el => {
+        el.innerText = el.getAttribute(`data-${newLang}`);
+      });
+
+      placeholders.forEach(input => {
+        input.placeholder = input.getAttribute(`data-${newLang}-placeholder`);
+      });
+
+      langBtnText.textContent = newLang === "en" ? "Toggle Language" : "భాష మార్చు";
+    }
+  </script>
+</body>
+</html>

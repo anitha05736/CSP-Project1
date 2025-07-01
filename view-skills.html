@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registered Users</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #eda4f8, #e0f7fa);
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    h2 {
+      text-align: center;
+      color: #4a148c;
+    }
+
+    .info-container {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 1.1em;
+      color: #333;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 280px;
+    }
+
+    .card p {
+      margin: 8px 0;
+      font-size: 15px;
+    }
+
+    .card button {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .card button:hover {
+      background-color: darkred;
+    }
+
+    .lang-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    .lang-toggle button {
+      padding: 10px 16px;
+      background-color: #4a148c;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .lang-toggle button:hover {
+      background-color: #6a1b9a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌐 Language Toggle Button -->
+  <div class="lang-toggle">
+    <button onclick="toggleLanguage()">🌐 <span id="lang-btn-text">Toggle Language</span></button>
+  </div>
+
+  <!-- Heading -->
+  <h2 data-en="Registered Users" data-te="నమోదైన వినియోగదారులు">Registered Users</h2>
+
+  <!-- Info Section -->
+  <div class="info-container" data-en="Below are the individuals who have registered their skills with LocalSkillHub. You can explore their details and connect directly based on your requirements." 
+       data-te="ఇక్కడ LocalSkillHub లో వారి నైపుణ్యాలను నమోదు చేసుకున్నవారి వివరాలు ఉన్నాయి. మీ అవసరాలకు అనుగుణంగా వారిని అనుసంధించవచ్చు.">
+    Below are the individuals who have registered their skills with LocalSkillHub. You can explore their details and connect directly based on your requirements.
+  </div>
+
+  <!-- Cards Container -->
+  <div class="card-container" id="skillList"></div>
+
+  <script>
+    function saveSkills(skills) {
+      localStorage.setItem("skills", JSON.stringify(skills));
+    }
+
+    function renderSkills() {
+      const list = document.getElementById("skillList");
+      list.innerHTML = "";
+
+      const skills = JSON.parse(localStorage.getItem("skills") || "[]");
+
+      skills.forEach((s, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <p><b data-en="Name:" data-te="పేరు:">Name:</b> ${s.name}</p>
+          <p><b data-en="Skill:" data-te="నైపుణ్యం:">Skill:</b> ${s.skill}</p>
+          <p><b data-en="Location:" data-te="ప్రాంతం:">Location:</b> ${s.location}</p>
+          <p><b data-en="Time:" data-te="సమయం:">Time:</b> ${s.time}</p>
+          <p><b data-en="WhatsApp:" data-te="వాట్సాప్:">WhatsApp:</b> ${s.whatsapp}</p>
+          ${s.demoLink ? `<p><a href="${s.demoLink}" target="_blank">🎥 Demo Video</a></p>` : ""}
+          ${s.portfolio ? `<p><a href="${s.portfolio}" target="_blank">📁 Portfolio</a></p>` : ""}
+          ${s.certificate ? `<p>📄 Certificate: ${s.certificate}</p>` : ""}
+          <button data-en="Delete" data-te="తొలగించు" onclick="deleteSkill(${index})">Delete</button>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function deleteSkill(index) {
+      let skills = JSON.parse(localStorage.getItem("skills") || "[]");
+      skills.splice(index, 1);
+      saveSkills(skills);
+      renderSkills();
+    }
+
+    function toggleLanguage() {
+      const elements = document.querySelectorAll('[data-en], [data-te]');
+      const langBtnText = document.getElementById("lang-btn-text");
+
+      const currentLang = langBtnText.textContent.includes("Toggle Language") ? "en" : "te";
+      const newLang = currentLang === "en" ? "te" : "en";
+
+      elements.forEach(el => {
+        el.innerText = el.getAttribute(`data-${newLang}`);
+      });
+
+      langBtnText.textContent = newLang === "en" ? "Toggle Language" : "భాష మార్చు";
+    }
+
+    // Load skills on page load
+    renderSkills();
+  </script>
+</body>
+</html>

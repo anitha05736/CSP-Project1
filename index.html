@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LocalSkillHub</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Full page background */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #69eaea, #c3cfe2); /* soft gradient */
+      color: #3c2424;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 10px;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #2b2b2b;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #444;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #ece5e8, #e1bee7);
+      padding: 30px;
+      margin: 20px;
+      border-radius: 15px;
+      max-width: 850px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      transition: 0.3s ease-in-out;
+    }
+
+    .info-box:hover {
+      transform: scale(1.02);
+    }
+
+    .info-box p {
+      font-size: 1.3em;
+      font-weight: 500;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .button-section {
+      text-align: center;
+      margin: 20px;
+    }
+
+    .main-btn {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      margin: 10px;
+      border-radius: 10px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.2s ease-in-out;
+    }
+
+    .main-btn:hover {
+      background-color: #357ab8;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 20px;
+      background: #ececec;
+      width: 100%;
+      text-align: center;
+      font-size: 0.95em;
+      color: #666;
+    }
+
+    .lang-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+    }
+
+    .lang-toggle button {
+      background-color: #333;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .lang-toggle button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <!-- Language Toggle Button -->
+  <div class="lang-toggle">
+    <button onclick="toggleLanguage()">
+      🌐 <span id="lang-btn-text">Toggle Language</span>
+    </button>
+  </div>
+
+  <!-- Website Heading -->
+  <header>
+    <h1 data-en="Welcome to LocalSkillHub" data-te="లోకల్ స్కిల్ హబ్ కి స్వాగతం">Welcome to LocalSkillHub</h1>
+    <p data-en="Empowering unemployed youth by connecting skills with local needs." 
+       data-te="నైపుణ్యాలు ఉన్న యువతను స్థానిక అవసరాలతో అనుసంధానించడం.">
+       Empowering unemployed youth by connecting skills with local needs.
+    </p>
+  </header>
+
+  <!-- Updated Info Box -->
+ <section class="info-box">
+    <h2 data-en="🌟 Unlocking Local Talent, Empowering Youth 💪" 
+        data-te="🌟 స్థానిక ప్రతిభను వెలికితీస్తూ, యువతకు సాధికారత కల్పించాలి 💪">
+      🌟 Unlocking Local Talent, Empowering Youth 💪
+    </h2>
+    <p data-en="💡 Unseen talents deserve to shine—LocalSkillHub connects passionate youth with real opportunities, unlocking local power with every skill shared. 🔗✨" 
+       data-te="💡 చూపించని నైపుణ్యాలకు వెలుగు అవసరం—LocalSkillHub యువతను అవకాశాలతో అనుసంధానిస్తూ, ప్రతిభను సామర్థ్యంగా మార్చుతోంది. 🔗✨">
+       💡 Unseen talents deserve to shine—LocalSkillHub connects passionate youth with real opportunities, unlocking local power with every skill shared. 🔗✨
+    </p>
+  </section>
+
+  <!-- Navigation Buttons -->
+  <section class="button-section">
+    <a href="register.html"><button class="main-btn" data-en="📝 Register Your Skill" data-te="📝 మీ నైపుణ్యాన్ని నమోదు చేయండి">📝 Register Your Skill</button></a>
+    <a href="service.html"><button class="main-btn" data-en="📢 Post a Service Request" data-te="📢 సేవ అభ్యర్థనను పోస్ట్ చేయండి">📢 Post a Service Request</button></a>
+    <a href="view-skills.html"><button class="main-btn" data-en="👥 View Registered Users" data-te="👥 నమోదైన వినియోగదారులను చూడండి">👥 View Registered Users</button></a>
+    <a href="view-services.html"><button class="main-btn" data-en="🔍 View Service Requests" data-te="🔍 సేవ అభ్యర్థనలను చూడండి">🔍 View Service Requests</button></a>
+    <a href="search.html"><button class="main-btn" data-en="🧭 Search" data-te="🧭 శోధించండి">🧭 Search</button></a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p data-en="© 2025 LocalSkillHub" data-te="© 2025 లోకల్ స్కిల్ హబ్">© 2025 LocalSkillHub</p>
+  </footer>
+
+  <!-- Language Toggle Script -->
+  <script src="script.js"></script>
+</body>
+</html>

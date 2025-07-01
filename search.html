@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #cbe657, #2575fc); /* Attractive gradient */
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 100px auto;
+      padding: 25px;
+      background: #ffffffda;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      text-align: center;
+      color: #4a148c;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #bbb;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #357ab8;
+    }
+
+    .results {
+      margin-top: 20px;
+    }
+
+    .card {
+      background: #e1f5fe;
+      padding: 15px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .not-found {
+      text-align: center;
+      margin-top: 15px;
+      color: red;
+      font-weight: bold;
+    }
+
+    .lang-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 999;
+    }
+
+    .lang-toggle button {
+      background-color: #4a148c;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .lang-toggle button:hover {
+      background-color: #6a1b9a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌐 Language Toggle Button -->
+  <div class="lang-toggle">
+    <button onclick="toggleLanguage()">🌐 <span id="lang-btn-text">Toggle Language</span></button>
+  </div>
+
+  <div class="container">
+    <!-- Search Registered Users -->
+    <h2 data-en="Search Registered Users" data-te="నమోదైన వినియోగదారులను శోధించండి">Search Registered Users</h2>
+    <input type="text" id="searchSkills" data-en-placeholder="Search by name, skill or location" data-te-placeholder="పేరు, నైపుణ్యం లేదా ప్రాంతం ద్వారా శోధించండి" placeholder="Search by name, skill or location">
+    <button onclick="searchRegisteredUsers()" data-en="Search" data-te="శోధించు">Search</button>
+    <div id="registeredResults" class="results"></div>
+
+    <!-- Search Service Requests -->
+    <h2 data-en="Search Service Requests" data-te="సేవ అభ్యర్థనలను శోధించండి">Search Service Requests</h2>
+    <input type="text" id="searchServices" data-en-placeholder="Search by name, service or location" data-te-placeholder="పేరు, సేవ లేదా ప్రాంతం ద్వారా శోధించండి" placeholder="Search by name, service or location">
+    <button onclick="searchServiceRequests()" data-en="Search" data-te="శోధించు">Search</button>
+    <div id="serviceResults" class="results"></div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    const registeredUsers = JSON.parse(localStorage.getItem('skills')) || [];
+    const serviceRequests = JSON.parse(localStorage.getItem('services')) || [];
+
+    function searchRegisteredUsers() {
+      const query = document.getElementById('searchSkills').value.toLowerCase();
+      const resultDiv = document.getElementById('registeredResults');
+      resultDiv.innerHTML = '';
+      const results = registeredUsers.filter(item =>
+        item.name.toLowerCase().includes(query) ||
+        item.skill.toLowerCase().includes(query) ||
+        item.location.toLowerCase().includes(query)
+      );
+
+      if (results.length === 0) {
+        resultDiv.innerHTML = '<div class="not-found" data-en="No registered users found." data-te="నమోదైన వినియోగదారులు కనపడలేదు.">No registered users found.</div>';
+        updateLanguage(currentLang);
+        return;
+      }
+
+      results.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<strong>Name:</strong> ${item.name}<br>
+                          <strong>Skill:</strong> ${item.skill}<br>
+                          <strong>Location:</strong> ${item.location}<br>
+                          <strong>Time:</strong> ${item.time}<br>
+                          <strong>WhatsApp:</strong> ${item.whatsapp}`;
+        resultDiv.appendChild(card);
+      });
+    }
+
+    function searchServiceRequests() {
+      const query = document.getElementById('searchServices').value.toLowerCase();
+      const resultDiv = document.getElementById('serviceResults');
+      resultDiv.innerHTML = '';
+      const results = serviceRequests.filter(item =>
+        item.name.toLowerCase().includes(query) ||
+        item.service.toLowerCase().includes(query) ||
+        item.location.toLowerCase().includes(query)
+      );
+
+      if (results.length === 0) {
+        resultDiv.innerHTML = '<div class="not-found" data-en="No service requests found." data-te="సేవ అభ్యర్థనలు కనపడలేదు.">No service requests found.</div>';
+        updateLanguage(currentLang);
+        return;
+      }
+
+      results.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<strong>Name:</strong> ${item.name}<br>
+                          <strong>Service:</strong> ${item.service}<br>
+                          <strong>Location:</strong> ${item.location}<br>
+                          <strong>Contact:</strong> ${item.contact}`;
+        resultDiv.appendChild(card);
+      });
+    }
+
+    let currentLang = "en";
+
+    function toggleLanguage() {
+      currentLang = currentLang === "en" ? "te" : "en";
+      updateLanguage(currentLang);
+    }
+
+    function updateLanguage(lang) {
+      const elements = document.querySelectorAll('[data-en], [data-te]');
+      elements.forEach(el => {
+        el.innerText = el.getAttribute(`data-${lang}`);
+      });
+
+      const placeholders = document.querySelectorAll('[data-en-placeholder]');
+      placeholders.forEach(el => {
+        el.placeholder = el.getAttribute(`data-${lang}-placeholder`);
+      });
+
+      document.getElementById("lang-btn-text").textContent = lang === "en" ? "Toggle Language" : "భాష మార్చు";
+    }
+  </script>
+</body>
+</html>
