@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up - LocalSkillHub</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: linear-gradient(to right, #fdfcfb, #e2d1c3);
+      font-family: Arial, sans-serif;
+      padding: 40px;
+    }
+
+    .lang-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+    }
+
+    .lang-toggle button {
+      background-color: #333;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c2c2c;
+    }
+
+    form {
+      max-width: 450px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      background-color: #ff6f61;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #d64545;
+    }
+
+    .link-row {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .link-row a {
+      font-size: 0.95em;
+      color: #2a2a2a;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Language Toggle -->
+  <div class="lang-toggle">
+    <button onclick="toggleLanguage()">🌐 <span id="lang-btn-text">Toggle Language</span></button>
+  </div>
+
+  <h1 data-en="Create Your Account" data-te="మీ ఖాతాను సృష్టించండి">Create Your Account</h1>
+
+  <form>
+    <label for="name" data-en="Full Name" data-te="పూర్తి పేరు">Full Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email" data-en="Email" data-te="ఇమెయిల్">Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="username" data-en="Username" data-te="వినియోగదారుని పేరు">Username</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password" data-en="Password" data-te="పాస్వర్డ్">Password</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="confirm-password" data-en="Confirm Password" data-te="పాస్వర్డ్‌ను ధృవీకరించండి">Confirm Password</label>
+    <input type="password" id="confirm-password" name="confirm-password" required>
+
+    <button type="submit" data-en="Register" data-te="నమోదు చేయండి">Register</button>
+
+    <div class="link-row">
+      <a href="login.html" data-en="Already have an account? Login" data-te="ఖాతా ఉందా? లాగిన్ అవ్వండి">Already have an account? Login</a>
+    </div>
+  </form>
+
+  <script src="script.js"></script>
+<script>
+  document.querySelector("form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm-password").value;
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    const userData = {
+      name,
+      email,
+      username,
+      password
+    };
+
+    // Save to localStorage
+    localStorage.setItem("user_" + username, JSON.stringify(userData));
+    alert("Registration successful! Please login.");
+    window.location.href = "login.html";
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - LocalSkillHub</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #f3e7e9, #e3eeff);
+      font-family: Arial, sans-serif;
+      padding: 30px;
+    }
+    .lang-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+    }
+    .lang-toggle button {
+      background-color: #333;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .lang-toggle button:hover {
+      background-color: #555;
+    }
+    h1 {
+      text-align: center;
+      color: #2c2c2c;
+    }
+    p {
+      font-size: 1.2em;
+      color: #444;
+      max-width: 800px;
+      margin: 20px auto;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="lang-toggle">
+    <button onclick="toggleLanguage()">🌐 <span id="lang-btn-text">Toggle Language</span></button>
+  </div>
+
+  <h1 data-en="About LocalSkillHub" data-te="LocalSkillHub గురించి">About LocalSkillHub</h1>
+
+  <p data-en="LocalSkillHub is a platform designed to connect unemployed or underutilized skilled youth with the local community’s needs. 
+    Whether it's a small plumbing task or teaching a local course, we ensure every skill is valued and every opportunity is shared."
+     data-te="LocalSkillHub అనేది నిరుద్యోగ యువతను స్థానిక అవసరాలతో అనుసంధానించడానికి రూపొందించిన వేదిక. 
+     అది చిన్న పనైనా, కోచింగ్ క్లాస్ అయినా, ప్రతి నైపుణ్యం విలువైనదే మరియు ప్రతి అవకాశం పంచుకోవాలి అనే లక్ష్యంతో ఇది ముందుకు వస్తుంది.">
+    LocalSkillHub is a platform designed to connect unemployed or underutilized skilled youth with the local community’s needs...
+  </p>
+</body>
+<script src="script.js"></script>
+</html>

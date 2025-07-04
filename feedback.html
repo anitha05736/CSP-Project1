@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feedback - LocalSkillHub</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: linear-gradient(to right, #f8e8ff, #e0f7fa);
+      font-family: Arial, sans-serif;
+      padding: 40px;
+    }
+
+    .lang-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+    }
+
+    .lang-toggle button {
+      background-color: #333;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c2c2c;
+    }
+
+    form {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .stars {
+      display: flex;
+      justify-content: space-between;
+      width: 180px;
+      margin: 10px 0 20px;
+    }
+
+    .stars input[type="radio"] {
+      display: none;
+    }
+
+    .stars label {
+      font-size: 1.5em;
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .stars input[type="radio"]:checked ~ label,
+    .stars label:hover,
+    .stars label:hover ~ label {
+      color: gold;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #388e3c;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="lang-toggle">
+    <button onclick="toggleLanguage()">🌐 <span id="lang-btn-text">Toggle Language</span></button>
+  </div>
+
+  <h1 data-en="We Value Your Feedback" data-te="మీ అభిప్రాయం మాకు ముఖ్యం">We Value Your Feedback</h1>
+
+  <form>
+    <label data-en="1. How was your experience with LocalSkillHub?" data-te="1. LocalSkillHub తో మీ అనుభవం ఎలా ఉంది?">
+      1. How was your experience with LocalSkillHub?
+    </label>
+    <select>
+      <option data-en="Excellent" data-te="అద్భుతం">Excellent</option>
+      <option data-en="Good" data-te="బాగుంది">Good</option>
+      <option data-en="Average" data-te="సగటు">Average</option>
+      <option data-en="Poor" data-te="చెడ్డది">Poor</option>
+    </select>
+
+    <label data-en="2. What feature did you like the most?" data-te="2. మీరు బాగా నచ్చిన ఫీచర్ ఏది?">
+      2. What feature did you like the most?
+    </label>
+    <input type="text" placeholder="Your Answer" />
+
+    <label data-en="3. Any suggestions for improvement?" data-te="3. మెరుగుదల కోసం ఏమైనా సూచనలు ఉంటే తెలపండి.">
+      3. Any suggestions for improvement?
+    </label>
+    <textarea rows="4" placeholder="Write your feedback here..."></textarea>
+
+    <label data-en="4. Rate our website" data-te="4. మా వెబ్‌సైట్‌ను రేటింగ్ ఇవ్వండి">4. Rate our website</label>
+    <div class="stars">
+      <input type="radio" id="star5" name="rating" value="5" /><label for="star5">★</label>
+      <input type="radio" id="star4" name="rating" value="4" /><label for="star4">★</label>
+      <input type="radio" id="star3" name="rating" value="3" /><label for="star3">★</label>
+      <input type="radio" id="star2" name="rating" value="2" /><label for="star2">★</label>
+      <input type="radio" id="star1" name="rating" value="1" /><label for="star1">★</label>
+    </div>
+
+    <button type="submit" data-en="Submit Feedback" data-te="అభిప్రాయం సమర్పించండి">Submit Feedback</button>
+  </form>
+
+  <script src="script.js"></script>
+</body>
+</html>

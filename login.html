@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - LocalSkillHub</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #d4fc79, #96e6a1);
+      font-family: Arial, sans-serif;
+      padding: 40px;
+    }
+
+    .lang-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+    }
+
+    .lang-toggle button {
+      background-color: #333;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c2c2c;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #357ab8;
+    }
+
+    .link-row {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .link-row a {
+      margin: 0 10px;
+      font-size: 0.95em;
+      color: #2a2a2a;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Language Toggle -->
+  <div class="lang-toggle">
+    <button onclick="toggleLanguage()">🌐 <span id="lang-btn-text">Toggle Language</span></button>
+  </div>
+
+  <h1 data-en="Login to LocalSkillHub" data-te="LocalSkillHub కు లాగిన్ అవ్వండి">Login to LocalSkillHub</h1>
+
+  <form>
+    <label for="username" data-en="Username" data-te="వినియోగదారుని పేరు">Username</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password" data-en="Password" data-te="పాస్వర్డ్">Password</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit" data-en="Login" data-te="లాగిన్">Login</button>
+
+    <div class="link-row">
+      <a href="signup.html" data-en="New user? Register" data-te="కొత్త వినియోగదారా? నమోదు చేసుకోండి">New user? Register</a> |
+      <a href="#" data-en="Forgot Password?" data-te="పాస్వర్డ్ మర్చిపోయారా?">Forgot Password?</a>
+    </div>
+  </form>
+<script src="script.js"></script>
+<script>
+  document.querySelector("form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+
+    const storedUser = localStorage.getItem("user_" + username);
+
+    if (!storedUser) {
+      alert("User not found. Please register first.");
+      return;
+    }
+
+    const userData = JSON.parse(storedUser);
+
+    if (userData.password === password) {
+      alert("Login successful! Welcome, " + userData.name);
+      // Redirect to home or dashboard
+      window.location.href = "index.html";
+    } else {
+      alert("Incorrect password.");
+    }
+  });
+</script>
+
+</body>
+</html>
